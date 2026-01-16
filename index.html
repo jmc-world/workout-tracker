@@ -2,1410 +2,715 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Mie Gacoan Tycoon</title>
-    <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/128/8775/8775447.png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WORKOUT TRACKER</title>
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/100/100344.png" type="image/png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            -webkit-tap-highlight-color: transparent;
-            -webkit-touch-callout: none;
-        }
-        
+        /* Proteksi Anti-Copy & Anti-Paste */
         body {
-            background-color: #1a1a2e;
-            color: #f5f5f5;
-            line-height: 1.6;
-            padding: 15px;
-            background-image: radial-gradient(#16213e 1px, transparent 1px);
-            background-size: 20px 20px;
-            touch-action: manipulation;
-            overflow-x: hidden;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            font-family: 'Poppins', sans-serif;
+            background-color: #000;
             min-height: 100vh;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 15px;
-        }
-        
-        header {
-            grid-column: 1 / -1;
-            text-align: center;
-            margin-bottom: 15px;
-            padding: 15px;
-            background: linear-gradient(135deg, #e63946 0%, #a4161a 100%);
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-        }
-        
-        h1 {
-            font-size: 2rem;
-            margin-bottom: 8px;
-            color: #ffffff;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-        }
-        
-        h2 {
-            font-size: 1.3rem;
-            margin-bottom: 12px;
-            color: #f8c630;
-            border-bottom: 2px solid #e63946;
-            padding-bottom: 5px;
-        }
-        
-        .restaurant-info {
-            background-color: #16213e;
-            border-radius: 12px;
-            padding: 15px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-            margin-bottom: 15px;
-        }
-        
-        .stats-container {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-            margin-bottom: 15px;
-        }
-        
-        .stat-box {
-            background-color: #0f3460;
-            padding: 12px;
-            border-radius: 8px;
-            text-align: center;
-            border-left: 4px solid #e63946;
-        }
-        
-        .stat-value {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #f8c630;
-            margin-top: 5px;
-        }
-        
-        .stat-label {
-            font-size: 0.85rem;
-            color: #b8b8b8;
-        }
-        
-        .main-action {
-            text-align: center;
-            padding: 15px;
-            background-color: #16213e;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-            margin-bottom: 15px;
-        }
-        
-        #serve-btn {
-            background: linear-gradient(135deg, #f8c630 0%, #e6a500 100%);
-            color: #1a1a2e;
-            border: none;
-            padding: 18px 35px;
-            font-size: 1.3rem;
-            font-weight: bold;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-            box-shadow: 0 4px 12px rgba(248, 198, 48, 0.4);
-            margin-bottom: 12px;
-            min-height: 60px;
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            max-width: 300px;
-            margin-left: auto;
-            margin-right: auto;
-            touch-action: manipulation;
+            position: relative;
         }
-        
-        #serve-btn:hover {
-            transform: scale(1.03);
-            box-shadow: 0 6px 16px rgba(248, 198, 48, 0.6);
-        }
-        
-        #serve-btn:active {
-            transform: scale(0.98);
-        }
-        
-        .menu-container, .upgrades-container, .employees-container {
-            background-color: #16213e;
-            border-radius: 12px;
-            padding: 15px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-            margin-bottom: 15px;
-        }
-        
-        .menu-item, .upgrade-item, .employee-item {
-            background-color: #0f3460;
-            border-radius: 8px;
-            padding: 12px;
-            margin-bottom: 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-left: 4px solid #e63946;
-            transition: transform 0.2s;
-            min-height: 80px;
-        }
-        
-        .menu-item:hover, .upgrade-item:hover, .employee-item:hover {
-            transform: translateX(3px);
-        }
-        
-        .item-info {
-            flex: 1;
-            padding-right: 10px;
-        }
-        
-        .item-name {
-            font-weight: bold;
-            font-size: 1rem;
-            color: #f8c630;
-            margin-bottom: 4px;
-        }
-        
-        .item-desc {
-            font-size: 0.85rem;
-            color: #b8b8b8;
-            margin-bottom: 4px;
-            line-height: 1.3;
-        }
-        
-        .item-level {
-            font-size: 0.8rem;
-            color: #e63946;
-        }
-        
-        .item-cost {
-            font-size: 1rem;
-            font-weight: bold;
-            color: #4dff91;
-            margin-bottom: 8px;
-            text-align: right;
-        }
-        
-        .item-action {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            min-width: 100px;
-        }
-        
-        .buy-btn {
-            background: linear-gradient(135deg, #4dff91 0%, #1a8c4d 100%);
-            color: #1a1a2e;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: opacity 0.2s;
-            font-size: 0.9rem;
-            min-height: 40px;
-            min-width: 80px;
-            touch-action: manipulation;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .buy-btn.insufficient {
-            background: linear-gradient(135deg, #777 0%, #555 100%);
-            color: #aaa;
-            cursor: not-allowed;
-        }
-        
-        .buy-btn:not(.insufficient):active {
-            opacity: 0.8;
-        }
-        
-        .progress-container {
-            grid-column: 1 / -1;
-            background-color: #16213e;
-            border-radius: 12px;
-            padding: 15px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-            margin-top: 10px;
-        }
-        
-        .progress-bar {
-            height: 18px;
-            background-color: #0f3460;
-            border-radius: 9px;
-            overflow: hidden;
-            margin-top: 10px;
-        }
-        
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #e63946 0%, #f8c630 100%);
-            width: 0%;
-            transition: width 0.5s;
-        }
-        
-        .achievement-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-            gap: 12px;
-            margin-top: 15px;
-        }
-        
-        .achievement {
-            background-color: #0f3460;
-            border-radius: 8px;
-            padding: 12px;
-            text-align: center;
-            border: 2px solid transparent;
-            min-height: 120px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-        
-        .achievement.unlocked {
-            border-color: #f8c630;
-        }
-        
-        .achievement-icon {
-            font-size: 1.8rem;
-            margin-bottom: 8px;
-            color: #e63946;
-        }
-        
-        .achievement.unlocked .achievement-icon {
-            color: #f8c630;
-        }
-        
-        /* NOTIFIKASI DI TENGAH LAYAR */
-        .notification {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0);
-            background-color: #4dff91;
-            color: #1a1a2e;
-            padding: 15px 25px;
-            border-radius: 12px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
-            z-index: 1000;
-            max-width: 90%;
-            width: 350px;
-            font-weight: bold;
-            text-align: center;
-            opacity: 0;
-            transition: transform 0.3s, opacity 0.3s;
-            border: 3px solid #1a8c4d;
-        }
-        
-        .notification.warning {
-            background-color: #ff6b6b;
-            border-color: #e63946;
-        }
-        
-        .notification.show {
-            transform: translate(-50%, -50%) scale(1);
-            opacity: 1;
-        }
-        
-        .save-section {
-            grid-column: 1 / -1;
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 15px;
-        }
-        
-        .save-btn, .reset-btn {
-            padding: 12px 20px;
-            border-radius: 50px;
-            border: none;
-            font-weight: bold;
-            cursor: pointer;
-            transition: opacity 0.2s;
-            font-size: 0.95rem;
-            min-height: 50px;
-            min-width: 140px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            touch-action: manipulation;
-        }
-        
-        .save-btn {
-            background: linear-gradient(135deg, #4dff91 0%, #1a8c4d 100%);
-            color: #1a1a2e;
-        }
-        
-        .reset-btn {
-            background: linear-gradient(135deg, #e63946 0%, #a4161a 100%);
-            color: white;
-        }
-        
-        .income-per-second {
-            color: #4dff91;
-            font-weight: bold;
-            font-size: 1.1rem;
-            margin-top: 10px;
-        }
-        
-        .time-info {
-            color: #b8b8b8;
-            font-size: 0.85rem;
-            margin-top: 5px;
-        }
-        
-        /* Responsive Design untuk Mobile */
-        @media (max-width: 768px) {
-            .container {
-                grid-template-columns: 1fr;
-                gap: 12px;
-            }
-            
-            .stats-container {
-                grid-template-columns: 1fr;
-                gap: 10px;
-            }
-            
-            h1 {
-                font-size: 1.8rem;
-            }
-            
-            h2 {
-                font-size: 1.2rem;
-            }
-            
-            .stat-value {
-                font-size: 1.4rem;
-            }
-            
-            #serve-btn {
-                padding: 16px 30px;
-                font-size: 1.2rem;
-            }
-            
-            .menu-item, .upgrade-item, .employee-item {
-                flex-direction: column;
-                align-items: flex-start;
-                min-height: auto;
-            }
-            
-            .item-action {
-                width: 100%;
-                margin-top: 10px;
-                align-items: stretch;
-            }
-            
-            .buy-btn {
-                width: 100%;
-                min-width: auto;
-            }
-            
-            .achievement-container {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .save-section {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .save-btn, .reset-btn {
-                width: 100%;
-                max-width: 300px;
-            }
-            
-            .notification {
-                width: 85%;
-                padding: 12px 20px;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            body {
-                padding: 10px;
-            }
-            
-            .container {
-                gap: 10px;
-            }
-            
-            h1 {
-                font-size: 1.5rem;
-            }
-            
-            h2 {
-                font-size: 1.1rem;
-            }
-            
-            .stat-box {
-                padding: 10px;
-            }
-            
-            .stat-value {
-                font-size: 1.3rem;
-            }
-            
-            .menu-container, .upgrades-container, .employees-container, 
-            .restaurant-info, .main-action, .progress-container {
-                padding: 12px;
-            }
-            
-            .achievement-container {
-                grid-template-columns: 1fr;
-            }
-            
-            .notification {
-                width: 90%;
-                padding: 12px 18px;
-                font-size: 0.95rem;
-            }
-        }
-        
-        /* Tambahan untuk perbaikan di iOS */
-        @supports (-webkit-touch-callout: none) {
-            .buy-btn, #serve-btn, .save-btn, .reset-btn {
-                cursor: pointer;
-            }
-            
-            body {
-                -webkit-overflow-scrolling: touch;
-            }
-        }
-        
-        /* Overlay untuk notifikasi */
-        .notification-overlay {
+
+        body::before {
+            content: "";
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            z-index: 999;
-            opacity: 0;
+            background: url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=2070&auto=format&fit=crop') no-repeat center center fixed;
+            background-size: cover;
+            opacity: 0.4;
+            z-index: -1;
+        }
+
+        .glass-morphism {
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+        }
+
+        .active-workout {
+            position: relative;
+            overflow: hidden;
+            border: 2px solid #22c55e !important;
+            transform: scale(1.02);
+            background: rgba(34, 197, 94, 0.1) !important;
+        }
+
+        .modal-overlay {
+            background: rgba(0, 0, 0, 0.85);
+            display: none; 
+            position: fixed;
+            inset: 0;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+        }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: rgba(0,0,0,0.1); }
+        ::-webkit-scrollbar-thumb { background: #4b5563; border-radius: 10px; }
+
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: translate(-50%, -60%); }
+            10% { opacity: 1; transform: translate(-50%, -50%); }
+            90% { opacity: 1; transform: translate(-50%, -50%); }
+            100% { opacity: 0; transform: translate(-50%, -40%); }
+        }
+        .toast-center {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+            animation: fadeInOut 2.5s ease-in-out forwards;
             pointer-events: none;
-            transition: opacity 0.3s;
         }
         
-        .notification-overlay.show {
-            opacity: 1;
-            pointer-events: all;
+        select option {
+            background-color: #1a1a1a;
+            color: white;
         }
     </style>
 </head>
-<body>
-    <div class="container">
-        <header>
-            <h1><i class="fas fa-utensils"></i> MIE GACOAN TYCOON</h1>
-            <p>Simlasi Game Restoran Viral di Indonesia</p>
-        </header>
-        
-        <div class="restaurant-info">
-            <div class="stats-container">
-                <div class="stat-box">
-                    <div class="stat-label">Uang Anda</div>
-                    <div class="stat-value" id="money">Rp 1.000</div>
-                </div>
-                <div class="stat-box">
-                    <div class="stat-label">Pendapatan Per Detik</div>
-                    <div class="stat-value" id="income-per-second">Rp 0</div>
-                </div>
-                <div class="stat-box">
-                    <div class="stat-label">Total Pelanggan</div>
-                    <div class="stat-value" id="total-customers">0</div>
-                </div>
-                <div class="stat-box">
-                    <div class="stat-label">Prestasi Dicapai</div>
-                    <div class="stat-value" id="achievement-count">0/10</div>
-                </div>
-            </div>
+<body oncontextmenu="return false" onkeydown="return disableKeys(event)">
+
+    <div class="flex-grow flex items-center justify-center p-4">
+        <div class="w-full max-w-[500px] glass-morphism p-6 md:p-8 shadow-2xl text-white relative">
             
-            <div class="income-per-second">
-                <i class="fas fa-coins"></i> Pendapatan Otomatis: <span id="auto-income">Rp 0</span>/detik
-            </div>
-            <div class="time-info">
-                <i class="far fa-clock"></i> Waktu Bermain: <span id="play-time">00:00:00</span>
-            </div>
-        </div>
-        
-        <div class="main-action">
-            <h2><i class="fas fa-mug-hot"></i> Layani Pelanggan</h2>
-            <button id="serve-btn">
-                <i class="fas fa-concierge-bell"></i> Sajikan Mie Gacoan!<br>
-                <span style="font-size: 0.8rem;">Rp 10 / klik</span>
+            <!-- Icon Preset List (Top Right) -->
+            <button onclick="openPresetModal()" class="absolute top-6 right-6 text-yellow-400 hover:text-yellow-300 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16" />
+                </svg>
             </button>
-            <p>Klik tombol untuk menyajikan mie gacoan kepada pelanggan dan hasilkan uang!</p>
+
+            <header class="text-center mb-8 pr-10">
+                <h1 class="text-2xl md:text-3xl font-bold uppercase tracking-widest text-yellow-400">WORKOUT TRACKER</h1>
+                <p class="text-sm text-gray-400">Buat dan Lacak Latihan Olahraga Anda</p>
+            </header>
+
+            <!-- Bagian Atas: Form Input -->
+            <section id="inputSection" class="space-y-4 mb-8">
+                <div>
+                    <label class="block text-sm font-semibold mb-1 text-gray-300">🎭 Nama Workout (Min. 6 Huruf)</label>
+                    <input type="text" id="workoutName" placeholder="Contoh: Jumping Jack" 
+                        class="w-full bg-black bg-opacity-50 border border-gray-700 rounded-lg px-4 py-2 focus:ring-2 focus:ring-yellow-500 outline-none text-white transition-all">
+                </div>
+
+                <div class="grid grid-cols-1 gap-4">
+                    <div>
+                        <label class="block text-sm font-semibold mb-1 text-gray-300">😈 Tingkat Kesulitan</label>
+                        <select id="difficulty" class="w-full bg-black bg-opacity-50 border border-gray-700 rounded-lg px-4 py-2 focus:ring-2 focus:ring-yellow-500 outline-none text-white">
+                            <option value="Mudah">Mudah</option>
+                            <option value="Sedang">Sedang</option>
+                            <option value="Sulit">Sulit</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold mb-1 text-gray-300">⏲ Durasi (Waktu)</label>
+                        <div class="flex gap-2">
+                            <select id="durationMin" class="flex-1 bg-black bg-opacity-50 border border-gray-700 rounded-lg px-2 py-2 focus:ring-2 focus:ring-yellow-500 outline-none text-white text-sm"></select>
+                            <span class="flex items-center text-xs text-gray-400">Min</span>
+                            <select id="durationSec" class="flex-1 bg-black bg-opacity-50 border border-gray-700 rounded-lg px-2 py-2 focus:ring-2 focus:ring-yellow-500 outline-none text-white text-sm"></select>
+                            <span class="flex items-center text-xs text-gray-400">Det</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex gap-2">
+                    <button onclick="addWorkout()" class="flex-[2] bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-3 rounded-lg transition-all duration-300 transform active:scale-95 shadow-lg mt-2 text-sm">
+                       +  ADD WORKOUT
+                    </button>
+                    <button onclick="openRestModal()" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg transition-all duration-300 transform active:scale-100 shadow-lg mt-2 text-sm">
+                        😤 ADD REST
+                    </button>
+                </div>
+            </section>
+
+            <!-- Bagian Tengah: Daftar Workout -->
+            <section>
+                <div class="flex justify-between items-center mb-4 border-b border-gray-700 pb-2">
+                    <h2 class="text-xl font-bold">Daftar Workout</h2>
+                    <span id="timerDisplay" class="text-3xl font-mono text-yellow-400 hidden">00:00</span>
+                </div>
+                
+                <div id="workoutList" class="space-y-3 max-h-60 overflow-y-auto pr-2 mb-6">
+                    <p id="emptyMsg" class="text-center text-gray-500 italic text-sm">Belum ada daftar workout.</p>
+                </div>
+
+                <!-- Kontrol Utama -->
+                <div id="mainControls" class="space-y-3">
+                    <button id="btnStart" onclick="startWorkoutSession()" 
+                        class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-4 rounded-xl transition-all duration-300 shadow-xl border-2 border-green-400">
+                        🏃‍➡️ MULAI OLAHRAGA
+                    </button>
+                    <div class="flex">
+                        <button onclick="openSavePresetModal()" 
+                            class="w-full bg-gray-800 hover:bg-gray-700 text-green-400 font-bold py-4 rounded-xl transition-all duration-300 border border-gray-600 text-s tracking-widest uppercase">
+                            + SIMPAN PRESET
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Kontrol Sesi Berjalan -->
+                <div id="activeControls" class="hidden flex gap-3">
+                    <button id="btnPauseResume" onclick="togglePauseResume()" 
+                        class="flex-1 bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-4 rounded-xl transition-all duration-300 shadow-xl border-2 border-yellow-400">
+                        JEDA
+                    </button>
+                    <button onclick="confirmStop()" 
+                        class="flex-1 bg-red-600 hover:bg-red-700 text-white font-bold py-4 rounded-xl transition-all duration-300 shadow-xl border-2 border-red-400">
+                        BERHENTI
+                    </button>
+                </div>
+            </section>
         </div>
-        
-        <div class="menu-container">
-            <h2><i class="fas fa-utensil-spoon"></i> Menu Mie Gacoan</h2>
-            <div id="menu-items">
-                <!-- Menu items akan diisi oleh JavaScript -->
-            </div>
-        </div>
-        
-        <div class="upgrades-container">
-            <h2><i class="fas fa-chart-line"></i> Upgrade Restoran</h2>
-            <div id="upgrade-items">
-                <!-- Upgrade items akan diisi oleh JavaScript -->
-            </div>
-        </div>
-        
-        <div class="employees-container">
-            <h2><i class="fas fa-user-tie"></i> Karyawan</h2>
-            <div id="employee-items">
-                <!-- Employee items akan diisi oleh JavaScript -->
-            </div>
-        </div>
-        
-        <div class="progress-container">
-            <h2><i class="fas fa-trophy"></i> Progress Restoran</h2>
-            <p>Tingkat Prestasi: <span id="prestige-level">1</span></p>
-            <div class="progress-bar">
-                <div class="progress-fill" id="prestige-progress" style="width: 0%"></div>
-            </div>
-            <p>Peningkatan berikutnya: <span id="next-prestige">Rp 10.000</span></p>
-            
-            <div class="achievement-container" id="achievements">
-                <!-- Achievements akan diisi oleh JavaScript -->
-            </div>
-        </div>
-        
-        <div class="save-section">
-            <button class="save-btn" id="save-game">
-                <i class="fas fa-save"></i> Simpan Game
-            </button>
-            <button class="reset-btn" id="reset-game">
-                <i class="fas fa-redo"></i> Reset Game
-            </button>
-        </div>
-    </div>
-    
-    <!-- Overlay untuk notifikasi -->
-    <div class="notification-overlay" id="notification-overlay"></div>
-    
-    <!-- Notifikasi di tengah layar -->
-    <div class="notification" id="notification">
-        <div id="notification-message">Test notification</div>
     </div>
 
+    <!-- Modals -->
+    
+    <!-- Save Preset Modal -->
+    <div id="savePresetModal" class="modal-overlay">
+        <div class="bg-gray-900 text-white p-8 rounded-2xl shadow-2xl w-full max-w-[400px] mx-4 border border-yellow-500">
+            <h2 class="text-2xl font-bold mb-4 text-yellow-400">Simpan Preset</h2>
+            <p class="text-xs text-gray-400 mb-4">Berikan nama untuk daftar workout ini agar bisa dimuat kembali nanti.</p>
+            <input type="text" id="presetName" placeholder="Nama Preset (misal: Latihan Pagi)" 
+                class="w-full bg-black border border-gray-700 rounded-lg px-4 py-2 mb-6 focus:ring-2 focus:ring-yellow-400 outline-none">
+            <div class="flex gap-3">
+                <button onclick="saveCurrentToPreset()" class="flex-1 bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-2 rounded-lg transition-all">SIMPAN</button>
+                <button onclick="closeSavePresetModal()" class="flex-1 bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 rounded-lg transition-all">BATAL</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Preset List Modal -->
+    <div id="presetModal" class="modal-overlay">
+        <div class="bg-gray-900 text-white p-8 rounded-2xl shadow-2xl w-full max-w-[450px] mx-4 border border-gray-700 flex flex-col max-h-[80vh]">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold text-white-400">Daftar Preset</h2>
+                <button onclick="closePresetModal()" class="text-gray-400 hover:text-white">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <div id="presetItemsContainer" class="space-y-3 overflow-y-auto pr-2">
+                <!-- Preset items go here -->
+            </div>
+            <p id="noPresetMsg" class="text-center text-gray-500 italic py-10 hidden">Belum ada preset yang disimpan.</p>
+        </div>
+    </div>
+
+    <!-- Stop Modal -->
+    <div id="stopModal" class="modal-overlay">
+        <div class="bg-gray-900 text-white p-8 rounded-2xl shadow-2xl w-full max-w-[400px] mx-4 border border-red-500 text-center">
+            <h2 class="text-2xl font-bold mb-4 text-red-500">Berhenti?</h2>
+            <p class="mb-6 text-gray-300">Apakah Anda yakin ingin menghentikan sesi latihan saat ini? Progres tidak akan disimpan.</p>
+            <div class="flex gap-3">
+                <button onclick="stopWorkoutSession(true)" class="flex-1 bg-red-600 hover:bg-red-700 text-white font-bold py-2 rounded-lg transition-all">IYA, BERHENTI</button>
+                <button onclick="closeStopModal()" class="flex-1 bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 rounded-lg transition-all">BATAL</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Rest Modal -->
+    <div id="restModal" class="modal-overlay">
+        <div class="bg-gray-900 text-white p-8 rounded-2xl shadow-2xl w-full max-w-[400px] mx-4 border border-blue-500">
+            <h2 class="text-2xl font-bold mb-6 text-blue-400 text-center">Atur Waktu Istirahat</h2>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-semibold mb-1">Durasi Istirahat (Min. 30 Detik)</label>
+                    <div class="flex gap-2">
+                        <select id="restDurationMin" class="flex-1 bg-gray-800 border border-gray-600 rounded-lg px-2 py-2 outline-none focus:ring-2 focus:ring-blue-400 text-sm"></select>
+                        <span class="flex items-center text-xs text-gray-400">Min</span>
+                        <select id="restDurationSec" class="flex-1 bg-gray-800 border border-gray-600 rounded-lg px-2 py-2 outline-none focus:ring-2 focus:ring-blue-400 text-sm"></select>
+                        <span class="flex items-center text-xs text-gray-400">Det</span>
+                    </div>
+                </div>
+                <div class="flex gap-3 pt-4">
+                    <button onclick="addRestWorkout()" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 rounded-lg transition-all">TAMBAHKAN</button>
+                    <button onclick="closeRestModal()" class="flex-1 bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 rounded-lg transition-all">BATAL</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Modal -->
+    <div id="editModal" class="modal-overlay">
+        <div class="bg-gray-900 text-white p-8 rounded-2xl shadow-2xl w-full max-w-[400px] mx-4 border border-gray-700">
+            <h2 class="text-2xl font-bold mb-6 text-yellow-400">Edit Workout</h2>
+            <div class="space-y-4">
+                <input type="hidden" id="editIndex">
+                <div>
+                    <label class="block text-sm font-semibold mb-1">Nama Kegiatan</label>
+                    <input type="text" id="editWorkoutName" class="w-full bg-gray-800 border border-gray-600 rounded-lg px-4 py-2 outline-none focus:ring-2 focus:ring-yellow-400">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold mb-1">⏰ Durasi (Minimal 30 Detik)</label>
+                    <div class="flex gap-2">
+                        <select id="editDurationMin" class="flex-1 bg-gray-800 border border-gray-600 rounded-lg px-2 py-2 outline-none focus:ring-2 focus:ring-yellow-400 text-sm"></select>
+                        <span class="flex items-center text-xs">Min</span>
+                        <select id="editDurationSec" class="flex-1 bg-gray-800 border border-gray-600 rounded-lg px-2 py-2 outline-none focus:ring-2 focus:ring-yellow-400 text-sm"></select>
+                        <span class="flex items-center text-xs">Det</span>
+                    </div>
+                </div>
+                <div class="flex gap-3 pt-4">
+                    <button onclick="saveEdit()" class="flex-1 bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-2 rounded-lg transition-all">SIMPAN</button>
+                    <button onclick="closeEditModal()" class="flex-1 bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 rounded-lg transition-all">BATAL</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Finish Modal -->
+    <div id="finishModal" class="modal-overlay">
+        <div class="bg-white text-gray-900 p-8 rounded-2xl shadow-2xl text-center max-w-sm mx-4">
+            <div class="mb-4 text-green-600">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+            </div>
+            <h2 class="text-2xl font-bold mb-2 uppercase">Selesai!</h2>
+            <p class="mb-6 font-semibold">OLAHRAGA ANDA TELAH BERAKHIR!</p>
+            <button onclick="closeModal()" class="bg-gray-900 hover:bg-black text-white px-8 py-2 rounded-lg font-bold transition-colors shadow-lg">
+                TUTUP
+            </button>
+        </div>
+    </div>
+
+    <audio id="bellSound" src="https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3"></audio>
+
+    <footer class="w-full text-center py-4 bg-black bg-opacity-90 text-gray-400 text-xs tracking-widest mt-auto border-t border-gray-800">
+        &copy; Made by JMC World 2026 - Powered by Gemini AI
+    </footer>
+
     <script>
-        // Game State
-        const gameState = {
-            money: 100,
-            totalCustomers: 0,
-            incomePerClick: 50,
-            autoIncome: 0,
-            prestigeLevel: 1,
-            prestigeProgress: 0,
-            nextPrestigeAt: 10000,
-            playTime: 0,
-            hasAutoIncomeStarted: false, // Flag untuk menandai apakah pendapatan otomatis sudah dimulai
+        // Data State
+        let workouts = [];
+        let presets = [];
+        let isRunning = false;
+        let isPaused = false;
+        let currentIndex = 0;
+        let timeLeft = 0;
+        let timerInterval = null;
+
+        // LOCAL STORAGE KEYS
+        const STORAGE_KEY_WORKOUTS = 'jmc_current_workouts';
+        const STORAGE_KEY_PRESETS = 'jmc_workout_presets';
+
+        window.addEventListener('DOMContentLoaded', () => {
+            populateTimeDropdowns('durationMin', 'durationSec');
+            populateTimeDropdowns('editDurationMin', 'editDurationSec');
+            populateTimeDropdowns('restDurationMin', 'restDurationSec');
             
-            menu: [
-                { id: 1, name: "Mie Gacoan Level 1", level: 1, baseIncome: 10, cost: 100, desc: "Mie original dengan topping standar" },
-                { id: 2, name: "Mie Gacoan Level 2", level: 0, baseIncome: 20, cost: 500, desc: "Mie dengan tambahan pangsit dan bakso" },
-                { id: 3, name: "Mie Gacoan Level 3", level: 0, baseIncome: 80, cost: 2000, desc: "Mie premium dengan seafood" },
-                { id: 4, name: "Mie Gacoan Level 4", level: 0, baseIncome: 200, cost: 10000, desc: "Mie super pedas dengan topping lengkap" },
-                { id: 5, name: "Mie Gacoan Level 5", level: 0, baseIncome: 1000, cost: 50000, desc: "Mie spesial chef dengan bahan import" }
-            ],
-            
-            upgrades: [
-                { id: 1, name: "Iklan Sosial Media", level: 0, cost: 2500, incomeMultiplier: 1.2, desc: "Tingkatkan jumlah pelanggan dengan iklan" },
-                { id: 2, name: "Pelatihan Koki", level: 0, cost: 5000, incomeMultiplier: 1.5, desc: "Koki lebih cepat menyajikan mie" },
-                { id: 3, name: "Renovasi Restoran", level: 0, cost: 20000, incomeMultiplier: 2, desc: "Restoran lebih nyaman dan menarik" },
-                { id: 4, name: "Sistem POS Modern", level: 0, cost: 75000, incomeMultiplier: 3, desc: "Proses pemesanan lebih cepat" },
-                { id: 5, name: "Waralaba", level: 0, cost: 300000, incomeMultiplier: 5, desc: "Buka cabang di lokasi strategis" }
-            ],
-            
-            employees: [
-                { id: 1, name: "Pelayan", level: 0, cost: 1000, autoIncome: 10, desc: "Melayani pelanggan secara otomatis" },
-                { id: 2, name: "Koki Junior", level: 0, cost: 5000, autoIncome: 20, desc: "Memasak mie secara otomatis" },
-                { id: 3, name: "Koki Senior", level: 0, cost: 25000, autoIncome: 60, desc: "Memasak mie lebih cepat" },
-                { id: 4, name: "Manajer", level: 0, cost: 100000, autoIncome: 200, desc: "Mengatur operasional restoran" },
-                { id: 5, name: "Chef Profesional", level: 0, cost: 500000, autoIncome: 500, desc: "Menciptakan menu baru yang laris" }
-            ],
-            
-            achievementList: [
-                { id: 1, name: "Pertama Kali", desc: "Dapatkan Rp 1.000", condition: 1000, unlocked: false, icon: "fas fa-star" },
-                { id: 2, name: "Pendapatan Stabil", desc: "Dapatkan pendapatan otomatis Rp 10/detik", condition: 10, unlocked: false, icon: "fas fa-chart-line" },
-                { id: 3, name: "Pelanggan Setia", desc: "Layani 100 pelanggan", condition: 100, unlocked: false, icon: "fas fa-users" },
-                { id: 4, name: "Menu Lengkap", desc: "Buka semua level menu", condition: 5, unlocked: false, icon: "fas fa-utensils" },
-                { id: 5, name: "Karyawan Terlatih", desc: "Punya 5 karyawan", condition: 5, unlocked: false, icon: "fas fa-user-tie" },
-                { id: 6, name: "Taipan Muda", desc: "Kumpulkan Rp 1.000.000", condition: 1000000, unlocked: false, icon: "fas fa-crown" },
-                { id: 7, name: "Upgrade Maksimal", desc: "Upgrade semua fasilitas", condition: 5, unlocked: false, icon: "fas fa-tools" },
-                { id: 8, name: "Restoran Populer", desc: "Layani 1.000 pelanggan", condition: 1000, unlocked: false, icon: "fas fa-fire" },
-                { id: 9, name: "Miliarder Mie", desc: "Kumpulkan Rp 10.000.000", condition: 10000000, unlocked: false, icon: "fas fa-gem" },
-                { id: 10, name: "Legenda Mie Gacoan", desc: "Capai tingkat prestise 5", condition: 5, unlocked: false, icon: "fas fa-trophy" }
-            ]
-        };
-        
-        // DOM Elements
-        const moneyElement = document.getElementById('money');
-        const incomePerSecondElement = document.getElementById('income-per-second');
-        const totalCustomersElement = document.getElementById('total-customers');
-        const achievementCountElement = document.getElementById('achievement-count');
-        const autoIncomeElement = document.getElementById('auto-income');
-        const playTimeElement = document.getElementById('play-time');
-        const serveButton = document.getElementById('serve-btn');
-        const menuItemsContainer = document.getElementById('menu-items');
-        const upgradeItemsContainer = document.getElementById('upgrade-items');
-        const employeeItemsContainer = document.getElementById('employee-items');
-        const achievementsContainer = document.getElementById('achievements');
-        const notification = document.getElementById('notification');
-        const notificationMessage = document.getElementById('notification-message');
-        const notificationOverlay = document.getElementById('notification-overlay');
-        const saveGameButton = document.getElementById('save-game');
-        const resetGameButton = document.getElementById('reset-game');
-        const prestigeLevelElement = document.getElementById('prestige-level');
-        const prestigeProgressElement = document.getElementById('prestige-progress');
-        const nextPrestigeElement = document.getElementById('next-prestige');
-        
-        // Variabel untuk mengontrol interval pendapatan otomatis
-        let autoIncomeInterval = null;
-        
-        // Fungsi helper untuk event mobile
-        function addMobileEvent(element, event, handler) {
-            if (element && handler) {
-                element.addEventListener(event, handler, { passive: true });
-            }
+            // LOAD DATA DARI LOCAL STORAGE
+            loadFromLocalStorage();
+            renderWorkouts();
+        });
+
+        function saveToLocalStorage() {
+            localStorage.setItem(STORAGE_KEY_WORKOUTS, JSON.stringify(workouts));
         }
-        
-        // Format angka ke format mata uang Indonesia
-        function formatMoney(amount) {
-            if (amount >= 1000000000) {
-                return `${(amount / 1000000000).toFixed(2)} Miliar`;
-            } else if (amount >= 1000000) {
-                return `${(amount / 1000000).toFixed(2)} Juta`;
-            } else if (amount >= 1000) {
-                return `${(amount / 1000).toFixed(3)} Ribu`;
+
+        function loadFromLocalStorage() {
+            // Load Workouts Utama
+            const savedWorkouts = localStorage.getItem(STORAGE_KEY_WORKOUTS);
+            if (savedWorkouts) {
+                workouts = JSON.parse(savedWorkouts);
             }
-            return `Rp ${amount}`;
-        }
-        
-        // Tampilkan notifikasi di tengah layar
-        function showNotification(message, isWarning = false) {
-            notificationMessage.textContent = message;
-            notification.classList.add('show');
-            
-            if (isWarning) {
-                notification.classList.add('warning');
+
+            // Load Presets
+            const savedPresets = localStorage.getItem(STORAGE_KEY_PRESETS);
+            if (savedPresets) {
+                presets = JSON.parse(savedPresets);
             } else {
-                notification.classList.remove('warning');
-            }
-            
-            notificationOverlay.classList.add('show');
-            
-            setTimeout(() => {
-                notification.classList.remove('show');
-                notificationOverlay.classList.remove('show');
-                notification.classList.remove('warning');
-            }, 3000);
-        }
-        
-        // Update tampilan statistik game
-        function updateStats() {
-            moneyElement.textContent = formatMoney(gameState.money);
-            
-            // Hitung pendapatan per detik
-            let totalIncomePerSecond = 0;
-            
-            // Hitung dari menu yang sudah di-upgrade (level > 0)
-            gameState.menu.forEach(item => {
-                if (item.level > 0) {
-                    totalIncomePerSecond += item.baseIncome * item.level;
-                }
-            });
-            
-            // Hitung dari karyawan yang sudah dipekerjakan (level > 0)
-            gameState.employees.forEach(employee => {
-                if (employee.level > 0) {
-                    totalIncomePerSecond += employee.autoIncome * employee.level;
-                }
-            });
-            
-            // Terapkan multiplier dari upgrade
-            let totalMultiplier = 1;
-            gameState.upgrades.forEach(upgrade => {
-                if (upgrade.level > 0) {
-                    totalMultiplier *= upgrade.incomeMultiplier;
-                }
-            });
-            
-            totalIncomePerSecond *= totalMultiplier;
-            gameState.autoIncome = totalIncomePerSecond;
-            
-            incomePerSecondElement.textContent = formatMoney(totalIncomePerSecond);
-            autoIncomeElement.textContent = formatMoney(totalIncomePerSecond);
-            totalCustomersElement.textContent = gameState.totalCustomers;
-            
-            // Update progress prestise
-            const progressPercent = Math.min(100, (gameState.money / gameState.nextPrestigeAt) * 100);
-            prestigeProgressElement.style.width = `${progressPercent}%`;
-            prestigeLevelElement.textContent = gameState.prestigeLevel;
-            nextPrestigeElement.textContent = formatMoney(gameState.nextPrestigeAt);
-            
-            // Update jumlah prestasi
-            const unlockedAchievements = gameState.achievementList.filter(a => a.unlocked).length;
-            achievementCountElement.textContent = `${unlockedAchievements}/10`;
-            
-            // Cek prestasi
-            checkAchievements();
-            
-            // Mulai pendapatan otomatis jika ada menu atau karyawan yang sudah di-upgrade
-            startAutoIncomeIfNeeded();
-            
-            // Update tampilan tombol setelah perubahan uang
-            updateButtonStates();
-        }
-        
-        // Mulai pendapatan otomatis jika sudah ada menu atau karyawan yang di-upgrade
-        function startAutoIncomeIfNeeded() {
-            // Cek apakah ada menu yang di-upgrade (selain level 1 default) atau karyawan yang dipekerjakan
-            const hasUpgradedMenu = gameState.menu.some(item => item.level > 0);
-            const hasEmployees = gameState.employees.some(employee => employee.level > 0);
-            
-            // Jika ada menu yang di-upgrade atau karyawan, dan pendapatan otomatis belum dimulai
-            if ((hasUpgradedMenu || hasEmployees) && !gameState.hasAutoIncomeStarted) {
-                gameState.hasAutoIncomeStarted = true;
-                
-                // Mulai interval pendapatan otomatis
-                if (!autoIncomeInterval) {
-                    autoIncomeInterval = setInterval(addAutoIncome, 1000);
-                    showNotification("Pendapatan otomatis telah dimulai!");
-                }
-            }
-            
-            // Jika tidak ada menu yang di-upgrade dan tidak ada karyawan, hentikan pendapatan otomatis
-            if (!hasUpgradedMenu && !hasEmployees && gameState.hasAutoIncomeStarted) {
-                gameState.hasAutoIncomeStarted = false;
-                
-                // Hentikan interval pendapatan otomatis
-                if (autoIncomeInterval) {
-                    clearInterval(autoIncomeInterval);
-                    autoIncomeInterval = null;
-                }
+                presets = [];
             }
         }
-        
-        // Update status tombol berdasarkan uang yang dimiliki
-        function updateButtonStates() {
-            // Update tombol menu
-            gameState.menu.forEach(item => {
-                const cost = item.cost * Math.pow(1.5, item.level);
-                const button = document.querySelector(`[data-menu-id="${item.id}"]`);
-                if (button) {
-                    if (gameState.money >= cost) {
-                        button.classList.remove('insufficient');
-                    } else {
-                        button.classList.add('insufficient');
-                    }
-                }
-            });
-            
-            // Update tombol upgrade
-            gameState.upgrades.forEach(upgrade => {
-                const cost = upgrade.cost * Math.pow(5, upgrade.level);
-                const button = document.querySelector(`[data-upgrade-id="${upgrade.id}"]`);
-                if (button) {
-                    if (gameState.money >= cost) {
-                        button.classList.remove('insufficient');
-                    } else {
-                        button.classList.add('insufficient');
-                    }
-                }
-            });
-            
-            // Update tombol karyawan
-            gameState.employees.forEach(employee => {
-                const cost = employee.cost * Math.pow(2, employee.level);
-                const button = document.querySelector(`[data-employee-id="${employee.id}"]`);
-                if (button) {
-                    if (gameState.money >= cost) {
-                        button.classList.remove('insufficient');
-                    } else {
-                        button.classList.add('insufficient');
-                    }
-                }
-            });
+
+        function populateTimeDropdowns(minId, secId) {
+            const minSelect = document.getElementById(minId);
+            const secSelect = document.getElementById(secId);
+            for (let i = 0; i <= 15; i++) {
+                const opt = document.createElement('option');
+                opt.value = i; opt.innerText = i.toString().padStart(2, '0');
+                minSelect.appendChild(opt);
+            }
+            for (let i = 0; i < 60; i++) {
+                const opt = document.createElement('option');
+                opt.value = i; opt.innerText = i.toString().padStart(2, '0');
+                if (secId === 'durationSec' && i === 30) opt.selected = true; 
+                if (secId === 'restDurationSec' && i === 30) opt.selected = true;
+                secSelect.appendChild(opt);
+            }
         }
-        
-        // Render menu items
-        function renderMenuItems() {
-            menuItemsContainer.innerHTML = '';
-            
-            gameState.menu.forEach(item => {
-                const menuItem = document.createElement('div');
-                menuItem.className = 'menu-item';
-                
-                const cost = item.cost * Math.pow(1.5, item.level);
-                const hasEnoughMoney = gameState.money >= cost;
-                
-                menuItem.innerHTML = `
-                    <div class="item-info">
-                        <div class="item-name">${item.name}</div>
-                        <div class="item-desc">${item.desc}</div>
-                        <div class="item-level">Level: ${item.level} | Pendapatan: ${formatMoney(item.baseIncome * item.level)}/detik</div>
-                    </div>
-                    <div class="item-action">
-                        <div class="item-cost">${formatMoney(Math.floor(cost))}</div>
-                        <button class="buy-btn ${hasEnoughMoney ? '' : 'insufficient'}" data-menu-id="${item.id}">
-                            ${item.level === 0 ? 'Buka' : 'Upgrade'}
-                        </button>
-                    </div>
-                `;
-                
-                menuItemsContainer.appendChild(menuItem);
-            });
-            
-            // Tambahkan event listener untuk tombol menu (mobile-friendly)
-            setTimeout(() => {
-                document.querySelectorAll('[data-menu-id]').forEach(button => {
-                    // Hapus event listener lama jika ada
-                    button.replaceWith(button.cloneNode(true));
-                });
-                
-                // Tambahkan event listener baru
-                document.querySelectorAll('[data-menu-id]').forEach(button => {
-                    const newButton = button;
-                    newButton.addEventListener('click', function() {
-                        const menuId = parseInt(this.getAttribute('data-menu-id'));
-                        buyMenuUpgrade(menuId);
-                    });
-                    addMobileEvent(newButton, 'touchstart', function(e) {
-                        e.preventDefault();
-                        const menuId = parseInt(this.getAttribute('data-menu-id'));
-                        buyMenuUpgrade(menuId);
-                    });
-                });
-            }, 10);
+
+        document.addEventListener('copy', (e) => e.preventDefault());
+        document.addEventListener('paste', (e) => e.preventDefault());
+        function disableKeys(e) {
+            if (e.ctrlKey && (e.key === 'c' || e.key === 'v' || e.key === 'u' || e.key === 'i')) return false;
         }
-        
-        // Render upgrade items
-        function renderUpgradeItems() {
-            upgradeItemsContainer.innerHTML = '';
-            
-            gameState.upgrades.forEach(upgrade => {
-                const upgradeItem = document.createElement('div');
-                upgradeItem.className = 'upgrade-item';
-                
-                const cost = upgrade.cost * Math.pow(2, upgrade.level);
-                const hasEnoughMoney = gameState.money >= cost;
-                
-                upgradeItem.innerHTML = `
-                    <div class="item-info">
-                        <div class="item-name">${upgrade.name}</div>
-                        <div class="item-desc">${upgrade.desc}</div>
-                        <div class="item-level">Level: ${upgrade.level} | Multiplier: ${upgrade.incomeMultiplier}x</div>
-                    </div>
-                    <div class="item-action">
-                        <div class="item-cost">${formatMoney(Math.floor(cost))}</div>
-                        <button class="buy-btn ${hasEnoughMoney ? '' : 'insufficient'}" data-upgrade-id="${upgrade.id}">
-                            ${upgrade.level === 0 ? 'Beli' : 'Upgrade'}
-                        </button>
-                    </div>
-                `;
-                
-                upgradeItemsContainer.appendChild(upgradeItem);
-            });
-            
-            // Tambahkan event listener untuk tombol upgrade (mobile-friendly)
-            setTimeout(() => {
-                document.querySelectorAll('[data-upgrade-id]').forEach(button => {
-                    button.replaceWith(button.cloneNode(true));
-                });
-                
-                document.querySelectorAll('[data-upgrade-id]').forEach(button => {
-                    const newButton = button;
-                    newButton.addEventListener('click', function() {
-                        const upgradeId = parseInt(this.getAttribute('data-upgrade-id'));
-                        buyUpgrade(upgradeId);
-                    });
-                    addMobileEvent(newButton, 'touchstart', function(e) {
-                        e.preventDefault();
-                        const upgradeId = parseInt(this.getAttribute('data-upgrade-id'));
-                        buyUpgrade(upgradeId);
-                    });
-                });
-            }, 10);
+
+        // PRESET LOGIC
+        function openSavePresetModal() {
+            if (isRunning) return;
+            if (workouts.length === 0) {
+                showToast("❎ Minimal terdaftar satu workout untuk simpan!", "error");
+                return;
+            }
+            document.getElementById('savePresetModal').style.display = 'flex';
         }
-        
-        // Render employee items
-        function renderEmployeeItems() {
-            employeeItemsContainer.innerHTML = '';
-            
-            gameState.employees.forEach(employee => {
-                const employeeItem = document.createElement('div');
-                employeeItem.className = 'employee-item';
-                
-                const cost = employee.cost * Math.pow(1.8, employee.level);
-                const hasEnoughMoney = gameState.money >= cost;
-                
-                employeeItem.innerHTML = `
-                    <div class="item-info">
-                        <div class="item-name">${employee.name}</div>
-                        <div class="item-desc">${employee.desc}</div>
-                        <div class="item-level">Level: ${employee.level} | Pendapatan: +${formatMoney(employee.autoIncome * employee.level)}/detik</div>
-                    </div>
-                    <div class="item-action">
-                        <div class="item-cost">${formatMoney(Math.floor(cost))}</div>
-                        <button class="buy-btn ${hasEnoughMoney ? '' : 'insufficient'}" data-employee-id="${employee.id}">
-                            ${employee.level === 0 ? 'Hire' : 'Upgrade'}
-                        </button>
-                    </div>
-                `;
-                
-                employeeItemsContainer.appendChild(employeeItem);
-            });
-            
-            // Tambahkan event listener untuk tombol karyawan (mobile-friendly)
-            setTimeout(() => {
-                document.querySelectorAll('[data-employee-id]').forEach(button => {
-                    button.replaceWith(button.cloneNode(true));
-                });
-                
-                document.querySelectorAll('[data-employee-id]').forEach(button => {
-                    const newButton = button;
-                    newButton.addEventListener('click', function() {
-                        const employeeId = parseInt(this.getAttribute('data-employee-id'));
-                        hireEmployee(employeeId);
-                    });
-                    addMobileEvent(newButton, 'touchstart', function(e) {
-                        e.preventDefault();
-                        const employeeId = parseInt(this.getAttribute('data-employee-id'));
-                        hireEmployee(employeeId);
-                    });
-                });
-            }, 10);
+
+        function closeSavePresetModal() {
+            document.getElementById('savePresetModal').style.display = 'none';
+            document.getElementById('presetName').value = "";
         }
-        
-        // Render achievements
-        function renderAchievements() {
-            achievementsContainer.innerHTML = '';
-            
-            gameState.achievementList.forEach(achievement => {
-                const achievementElement = document.createElement('div');
-                achievementElement.className = `achievement ${achievement.unlocked ? 'unlocked' : ''}`;
-                
-                achievementElement.innerHTML = `
-                    <div class="achievement-icon">
-                        <i class="${achievement.icon}"></i>
-                    </div>
-                    <div class="item-name">${achievement.name}</div>
-                    <div class="item-desc">${achievement.desc}</div>
-                `;
-                
-                achievementsContainer.appendChild(achievementElement);
-            });
-        }
-        
-        // Beli/upgrade menu
-        function buyMenuUpgrade(menuId) {
-            const menu = gameState.menu.find(m => m.id === menuId);
-            const cost = menu.cost * Math.pow(1.5, menu.level);
-            
-            // Cek apakah uang cukup
-            if (gameState.money < cost) {
-                showNotification("Uang Anda Tidak Cukup!", true);
+
+        function saveCurrentToPreset() {
+            const nameInput = document.getElementById('presetName');
+            const name = nameInput.value.trim();
+            if (!name) {
+                showToast("Nama preset tidak boleh kosong!", "error");
                 return;
             }
             
-            // Jika uang cukup, lakukan pembelian
-            gameState.money -= Math.floor(cost);
-            menu.level++;
-            
-            updateStats();
-            renderMenuItems();
-            
-            if (menu.level === 1) {
-                showNotification(`Menu ${menu.name} telah dibuka!`);
-            } else {
-                showNotification(`Menu ${menu.name} ditingkatkan ke level ${menu.level}!`);
-            }
-        }
-        
-        // Beli/upgrade upgrade
-        function buyUpgrade(upgradeId) {
-            const upgrade = gameState.upgrades.find(u => u.id === upgradeId);
-            const cost = upgrade.cost * Math.pow(2, upgrade.level);
-            
-            // Cek apakah uang cukup
-            if (gameState.money < cost) {
-                showNotification("Uang Anda Tidak Cukup!", true);
-                return;
-            }
-            
-            // Jika uang cukup, lakukan pembelian
-            gameState.money -= Math.floor(cost);
-            upgrade.level++;
-            
-            updateStats();
-            renderUpgradeItems();
-            
-            if (upgrade.level === 1) {
-                showNotification(`${upgrade.name} telah dibeli!`);
-            } else {
-                showNotification(`${upgrade.name} ditingkatkan ke level ${upgrade.level}!`);
-            }
-        }
-        
-        // Hire/upgrade karyawan
-        function hireEmployee(employeeId) {
-            const employee = gameState.employees.find(e => e.id === employeeId);
-            const cost = employee.cost * Math.pow(1.8, employee.level);
-            
-            // Cek apakah uang cukup
-            if (gameState.money < cost) {
-                showNotification("Uang Anda Tidak Cukup!", true);
-                return;
-            }
-            
-            // Jika uang cukup, lakukan pembelian
-            gameState.money -= Math.floor(cost);
-            employee.level++;
-            
-            updateStats();
-            renderEmployeeItems();
-            
-            if (employee.level === 1) {
-                showNotification(`${employee.name} telah dipekerjakan!`);
-            } else {
-                showNotification(`${employee.name} ditingkatkan ke level ${employee.level}!`);
-            }
-        }
-        
-        // Cek pencapaian achievement
-        function checkAchievements() {
-            let newAchievements = [];
-            
-            // Achievement 1: Dapatkan Rp 1.000
-            if (!gameState.achievementList[0].unlocked && gameState.money >= 1000) {
-                gameState.achievementList[0].unlocked = true;
-                newAchievements.push(gameState.achievementList[0].name);
-            }
-            
-            // Achievement 2: Pendapatan otomatis Rp 10/detik
-            if (!gameState.achievementList[1].unlocked && gameState.autoIncome >= 10) {
-                gameState.achievementList[1].unlocked = true;
-                newAchievements.push(gameState.achievementList[1].name);
-            }
-            
-            // Achievement 3: Layani 100 pelanggan
-            if (!gameState.achievementList[2].unlocked && gameState.totalCustomers >= 100) {
-                gameState.achievementList[2].unlocked = true;
-                newAchievements.push(gameState.achievementList[2].name);
-            }
-            
-            // Achievement 4: Buka semua level menu
-            if (!gameState.achievementList[3].unlocked) {
-                const allMenusUnlocked = gameState.menu.every(menu => menu.level > 0);
-                if (allMenusUnlocked) {
-                    gameState.achievementList[3].unlocked = true;
-                    newAchievements.push(gameState.achievementList[3].name);
-                }
-            }
-            
-            // Achievement 5: Punya 5 karyawan
-            if (!gameState.achievementList[4].unlocked) {
-                const totalEmployees = gameState.employees.reduce((sum, emp) => sum + emp.level, 0);
-                if (totalEmployees >= 5) {
-                    gameState.achievementList[4].unlocked = true;
-                    newAchievements.push(gameState.achievementList[4].name);
-                }
-            }
-            
-            // Achievement 6: Kumpulkan Rp 1.000.000
-            if (!gameState.achievementList[5].unlocked && gameState.money >= 1000000) {
-                gameState.achievementList[5].unlocked = true;
-                newAchievements.push(gameState.achievementList[5].name);
-            }
-            
-            // Achievement 7: Upgrade semua fasilitas
-            if (!gameState.achievementList[6].unlocked) {
-                const allUpgradesMaxed = gameState.upgrades.every(upgrade => upgrade.level > 0);
-                if (allUpgradesMaxed) {
-                    gameState.achievementList[6].unlocked = true;
-                    newAchievements.push(gameState.achievementList[6].name);
-                }
-            }
-            
-            // Achievement 8: Layani 1.000 pelanggan
-            if (!gameState.achievementList[7].unlocked && gameState.totalCustomers >= 1000) {
-                gameState.achievementList[7].unlocked = true;
-                newAchievements.push(gameState.achievementList[7].name);
-            }
-            
-            // Achievement 9: Kumpulkan Rp 10.000.000
-            if (!gameState.achievementList[8].unlocked && gameState.money >= 10000000) {
-                gameState.achievementList[8].unlocked = true;
-                newAchievements.push(gameState.achievementList[8].name);
-            }
-            
-            // Achievement 10: Capai tingkat prestise 5
-            if (!gameState.achievementList[9].unlocked && gameState.prestigeLevel >= 5) {
-                gameState.achievementList[9].unlocked = true;
-                newAchievements.push(gameState.achievementList[9].name);
-            }
-            
-            // Tampilkan notifikasi untuk achievement baru
-            if (newAchievements.length > 0) {
-                renderAchievements();
-                newAchievements.forEach(achievement => {
-                    showNotification(`Prestasi terbuka: ${achievement}!`);
-                });
-            }
-        }
-        
-        // Update waktu bermain
-        function updatePlayTime() {
-            gameState.playTime++;
-            
-            const hours = Math.floor(gameState.playTime / 3600);
-            const minutes = Math.floor((gameState.playTime % 3600) / 60);
-            const seconds = gameState.playTime % 60;
-            
-            playTimeElement.textContent = 
-                `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-        }
-        
-        // Tambahkan pendapatan otomatis
-        function addAutoIncome() {
-            // Hanya tambah pendapatan otomatis jika sudah dimulai
-            if (gameState.hasAutoIncomeStarted) {
-                gameState.money += gameState.autoIncome;
-                if (gameState.autoIncome > 0) {
-                    gameState.totalCustomers += Math.floor(gameState.autoIncome / 10);
-                }
-                updateStats();
-            }
-        }
-        
-        // Prestise system
-        function checkPrestige() {
-            if (gameState.money >= gameState.nextPrestigeAt) {
-                gameState.prestigeLevel++;
-                gameState.money = 1000; // Reset uang
-                gameState.nextPrestigeAt *= 5; // Naikkan target berikutnya
-                
-                // Reset beberapa progress
-                gameState.menu.forEach(menu => {
-                    menu.level = menu.id === 1 ? 1 : 0;
-                });
-                
-                gameState.upgrades.forEach(upgrade => {
-                    upgrade.level = 0;
-                });
-                
-                gameState.employees.forEach(employee => {
-                    employee.level = 0;
-                });
-                
-                // Reset flag pendapatan otomatis
-                gameState.hasAutoIncomeStarted = false;
-                
-                // Income per click bertambah dengan prestise
-                gameState.incomePerClick = 10 * gameState.prestigeLevel;
-                
-                showNotification(`Selamat! Anda mencapai Prestige Level ${gameState.prestigeLevel}!`);
-                updateStats();
-                renderMenuItems();
-                renderUpgradeItems();
-                renderEmployeeItems();
-            }
-        }
-        
-        // Simpan game ke localStorage
-        function saveGame() {
-            const saveData = {
-                money: gameState.money,
-                totalCustomers: gameState.totalCustomers,
-                incomePerClick: gameState.incomePerClick,
-                autoIncome: gameState.autoIncome,
-                prestigeLevel: gameState.prestigeLevel,
-                prestigeProgress: gameState.prestigeProgress,
-                nextPrestigeAt: gameState.nextPrestigeAt,
-                playTime: gameState.playTime,
-                hasAutoIncomeStarted: gameState.hasAutoIncomeStarted,
-                menu: gameState.menu,
-                upgrades: gameState.upgrades,
-                employees: gameState.employees,
-                achievementList: gameState.achievementList
+            const newPreset = {
+                id: Date.now(),
+                name: name,
+                data: JSON.parse(JSON.stringify(workouts)) 
             };
             
-            localStorage.setItem('mieGacoanSave', JSON.stringify(saveData));
-            showNotification('Game berhasil disimpan!');
+            presets.push(newPreset);
+            localStorage.setItem(STORAGE_KEY_PRESETS, JSON.stringify(presets));
+            showToast("Preset Berhasil Disimpan", "success");
+            closeSavePresetModal();
         }
-        
-        // Load game dari localStorage
-        function loadGame() {
-            const savedData = localStorage.getItem('mieGacoanSave');
+
+        function openPresetModal() {
+            if (isRunning) return;
+            const container = document.getElementById('presetItemsContainer');
+            const noMsg = document.getElementById('noPresetMsg');
+            container.innerHTML = "";
             
-            if (savedData) {
-                const saveData = JSON.parse(savedData);
-                
-                gameState.money = saveData.money;
-                gameState.totalCustomers = saveData.totalCustomers;
-                gameState.incomePerClick = saveData.incomePerClick;
-                gameState.autoIncome = saveData.autoIncome;
-                gameState.prestigeLevel = saveData.prestigeLevel;
-                gameState.prestigeProgress = saveData.prestigeProgress;
-                gameState.nextPrestigeAt = saveData.nextPrestigeAt;
-                gameState.playTime = saveData.playTime;
-                gameState.hasAutoIncomeStarted = saveData.hasAutoIncomeStarted || false;
-                gameState.menu = saveData.menu;
-                gameState.upgrades = saveData.upgrades;
-                gameState.employees = saveData.employees;
-                gameState.achievementList = saveData.achievementList;
-                
-                updateStats();
-                renderMenuItems();
-                renderUpgradeItems();
-                renderEmployeeItems();
-                renderAchievements();
-                
-                showNotification('Game berhasil dimuat!');
+            if (presets.length === 0) {
+                noMsg.classList.remove('hidden');
             } else {
-                showNotification('Tidak ada data game yang tersimpan.');
-            }
-        }
-        
-        // Reset game
-        function resetGame() {
-            if (confirm('Apakah Anda yakin ingin mereset game? Semua progress akan hilang.')) {
-                localStorage.removeItem('mieGacoanSave');
-                
-                // Reset ke state awal
-                gameState.money = 1000;
-                gameState.totalCustomers = 0;
-                gameState.incomePerClick = 50;
-                gameState.autoIncome = 0;
-                gameState.prestigeLevel = 1;
-                gameState.prestigeProgress = 0;
-                gameState.nextPrestigeAt = 10000;
-                gameState.playTime = 0;
-                gameState.hasAutoIncomeStarted = false;
-                
-                gameState.menu = [
-                    { id: 1, name: "Mie Gacoan Level 1", level: 1, baseIncome: 5, cost: 100, desc: "Mie original dengan topping standar" },
-                    { id: 2, name: "Mie Gacoan Level 2", level: 0, baseIncome: 15, cost: 500, desc: "Mie dengan tambahan pangsit dan bakso" },
-                    { id: 3, name: "Mie Gacoan Level 3", level: 0, baseIncome: 50, cost: 2000, desc: "Mie premium dengan seafood" },
-                    { id: 4, name: "Mie Gacoan Level 4", level: 0, baseIncome: 200, cost: 10000, desc: "Mie super pedas dengan topping lengkap" },
-                    { id: 5, name: "Mie Gacoan Level 5", level: 0, baseIncome: 1000, cost: 50000, desc: "Mie spesial chef dengan bahan import" }
-                ];
-                
-                gameState.upgrades = [
-                    { id: 1, name: "Iklan Sosial Media", level: 0, cost: 500, incomeMultiplier: 1.2, desc: "Tingkatkan jumlah pelanggan dengan iklan" },
-                    { id: 2, name: "Pelatihan Koki", level: 0, cost: 2000, incomeMultiplier: 1.5, desc: "Koki lebih cepat menyajikan mie" },
-                    { id: 3, name: "Renovasi Restoran", level: 0, cost: 10000, incomeMultiplier: 2, desc: "Restoran lebih nyaman dan menarik" },
-                    { id: 4, name: "Sistem POS Modern", level: 0, cost: 50000, incomeMultiplier: 3, desc: "Proses pemesanan lebih cepat" },
-                    { id: 5, name: "Waralaba", level: 0, cost: 200000, incomeMultiplier: 5, desc: "Buka cabang di lokasi strategis" }
-                ];
-                
-                gameState.employees = [
-                    { id: 1, name: "Pelayan", level: 0, cost: 1000, autoIncome: 2, desc: "Melayani pelanggan secara otomatis" },
-                    { id: 2, name: "Koki Junior", level: 0, cost: 5000, autoIncome: 10, desc: "Memasak mie secara otomatis" },
-                    { id: 3, name: "Koki Senior", level: 0, cost: 25000, autoIncome: 50, desc: "Memasak mie lebih cepat" },
-                    { id: 4, name: "Manajer", level: 0, cost: 100000, autoIncome: 200, desc: "Mengatur operasional restoran" },
-                    { id: 5, name: "Chef Profesional", level: 0, cost: 500000, autoIncome: 1000, desc: "Menciptakan menu baru yang laris" }
-                ];
-                
-                gameState.achievementList.forEach(achievement => {
-                    achievement.unlocked = false;
+                noMsg.classList.add('hidden');
+                presets.forEach(p => {
+                    const div = document.createElement('div');
+                    div.className = "bg-black bg-opacity-50 p-4 rounded-xl border border-gray-800 flex justify-between items-center group hover:border-yellow-500 transition-all";
+                    div.innerHTML = `
+                        <div>
+                            <h3 class="font-bold text-yellow-400">${p.name}</h3>
+                            <p class="text-xs text-gray-500">${p.data.length} Gerakan</p>
+                        </div>
+                        <div class="flex gap-2">
+                            <button onclick="loadPreset(${p.id})" class="bg-yellow-500 hover:bg-yellow-600 text-black px-3 py-1 rounded font-bold text-xs">MUAT</button>
+                            <button onclick="deletePreset(${p.id})" class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded font-bold text-xs">HAPUS</button>
+                        </div>
+                    `;
+                    container.appendChild(div);
                 });
-                
-                // Hentikan interval pendapatan otomatis jika sedang berjalan
-                if (autoIncomeInterval) {
-                    clearInterval(autoIncomeInterval);
-                    autoIncomeInterval = null;
-                }
-                
-                updateStats();
-                renderMenuItems();
-                renderUpgradeItems();
-                renderEmployeeItems();
-                renderAchievements();
-                
-                showNotification('Game telah direset!');
+            }
+            document.getElementById('presetModal').style.display = 'flex';
+        }
+
+        function closePresetModal() {
+            document.getElementById('presetModal').style.display = 'none';
+        }
+
+        function loadPreset(id) {
+            const preset = presets.find(p => p.id === id);
+            if (preset) {
+                workouts = JSON.parse(JSON.stringify(preset.data));
+                saveToLocalStorage(); // Simpan sebagai daftar aktif saat ini
+                renderWorkouts();
+                closePresetModal();
+                showToast(`Preset "${preset.name}" Dimuat`, "success");
             }
         }
-        
-        // Initialize game
-        function initGame() {
-            // Load saved game jika ada
-            loadGame();
-            
-            // Setup event listeners untuk tombol utama (mobile-friendly)
-            serveButton.addEventListener('click', () => {
-                gameState.money += gameState.incomePerClick;
-                gameState.totalCustomers++;
-                updateStats();
-                checkPrestige();
-            });
-            
-            // Tambahkan touch event untuk mobile
-            addMobileEvent(serveButton, 'touchstart', (e) => {
-                e.preventDefault();
-                gameState.money += gameState.incomePerClick;
-                gameState.totalCustomers++;
-                updateStats();
-                checkPrestige();
-            });
-            
-            saveGameButton.addEventListener('click', saveGame);
-            addMobileEvent(saveGameButton, 'touchstart', (e) => {
-                e.preventDefault();
-                saveGame();
-            });
-            
-            resetGameButton.addEventListener('click', resetGame);
-            addMobileEvent(resetGameButton, 'touchstart', (e) => {
-                e.preventDefault();
-                resetGame();
-            });
-            
-            // Setup play time counter
-            setInterval(updatePlayTime, 1000);
-            
-            // Setup prestige check interval
-            setInterval(checkPrestige, 5000);
-            
-            // Initial render
-            updateStats();
-            renderMenuItems();
-            renderUpgradeItems();
-            renderEmployeeItems();
-            renderAchievements();
+
+        function deletePreset(id) {
+            presets = presets.filter(p => p.id !== id);
+            localStorage.setItem(STORAGE_KEY_PRESETS, JSON.stringify(presets));
+            openPresetModal(); 
+            showToast("Preset Dihapus", "info");
         }
-        
-        // Start the game when page loads
-        document.addEventListener('DOMContentLoaded', initGame);
-        
-        // Mencegah zoom dengan pinch gesture di mobile
-        document.addEventListener('touchmove', function(e) {
-            if (e.scale !== 1) { e.preventDefault(); }
-        }, { passive: false });
-        
-        // Mencegah konteks menu di mobile
-        document.addEventListener('contextmenu', function(e) {
-            e.preventDefault();
-        });
-        
-        // Tutup notifikasi ketika overlay diklik
-        notificationOverlay.addEventListener('click', function() {
-            notification.classList.remove('show');
-            notificationOverlay.classList.remove('show');
-            notification.classList.remove('warning');
-        });
+
+        // WORKOUT LOGIC
+        function addWorkout() {
+            const nameInput = document.getElementById('workoutName');
+            const diffInput = document.getElementById('difficulty');
+            const minInput = document.getElementById('durationMin');
+            const secInput = document.getElementById('durationSec');
+            const name = nameInput.value.trim();
+            const totalDuration = (parseInt(minInput.value) * 60) + parseInt(secInput.value);
+            
+            const alphabetOnly = /^[A-Za-z\s]+$/;
+            if (name.length < 6 || !alphabetOnly.test(name)) {
+                showToast("Nama workout minimal 6 huruf alfabet!", "error");
+                return;
+            }
+            if (totalDuration < 30) {
+                showToast("❎ Durasi minimal 30 detik!", "error");
+                return;
+            }
+
+            workouts.push({ id: Date.now(), name: name, difficulty: diffInput.value, duration: totalDuration, isRest: false });
+            
+            saveToLocalStorage();
+            renderWorkouts();
+            
+            nameInput.value = ""; minInput.value = 0; secInput.value = 30;
+            showToast("Berhasil Ditambahkan", "success");
+        }
+
+        function openRestModal() {
+            if (isRunning) return;
+            document.getElementById('restModal').style.display = 'flex';
+        }
+
+        function closeRestModal() {
+            document.getElementById('restModal').style.display = 'none';
+        }
+
+        function addRestWorkout() {
+            const minVal = parseInt(document.getElementById('restDurationMin').value);
+            const secVal = parseInt(document.getElementById('restDurationSec').value);
+            const totalDuration = (minVal * 60) + secVal;
+
+            if (totalDuration < 30) {
+                showToast("❎ Istirahat minimal 30 detik!", "error");
+                return;
+            }
+
+            workouts.push({ 
+                id: Date.now(), 
+                name: "Jeda Olahraga", 
+                difficulty: "Break", 
+                duration: totalDuration,
+                isRest: true 
+            });
+            
+            saveToLocalStorage();
+            renderWorkouts();
+            closeRestModal();
+            showToast("✅ Waktu istirahat ditambahkan", "success");
+        }
+
+        function renderWorkouts() {
+            const list = document.getElementById('workoutList');
+            if (workouts.length === 0) {
+                list.innerHTML = `<p id="emptyMsg" class="text-center text-gray-500 italic text-sm py-4">Belum ada daftar workout.</p>`;
+                return;
+            }
+            list.innerHTML = workouts.map((w, index) => {
+                const m = Math.floor(w.duration / 60);
+                const s = w.duration % 60;
+                const isRest = w.isRest;
+                return `
+                    <div id="workout-item-${index}" class="flex justify-between items-center ${isRest ? 'bg-blue-900 bg-opacity-30' : 'bg-black bg-opacity-40'} p-4 rounded-lg border ${isRest ? 'border-blue-700' : 'border-gray-800'} transition-all ${isRunning && currentIndex === index ? 'active-workout' : ''}">
+                        <div>
+                            <h3 class="font-bold ${isRest ? 'text-blue-400' : 'text-yellow-400'} text-sm md:text-base">${w.name}</h3>
+                            <p class="text-xs text-gray-400">${w.difficulty} • <span class="text-green-500 font-semibold">${m}m ${s}s</span></p>
+                        </div>
+                        <div class="flex gap-2 ${isRunning ? 'hidden' : ''}">
+                            <button onclick="openEditModal(${index})" class="text-blue-400 hover:text-blue-200 text-xs font-semibold uppercase">Edit</button>
+                            <button onclick="deleteWorkout(${index})" class="text-red-400 hover:text-red-200 text-xs font-semibold uppercase">Hapus</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function deleteWorkout(index) {
+            if (isRunning) return;
+            workouts.splice(index, 1);
+            saveToLocalStorage();
+            renderWorkouts();
+            showToast("Item dihapus", "info");
+        }
+
+        function openEditModal(index) {
+            if (isRunning) return;
+            const workout = workouts[index];
+            document.getElementById('editIndex').value = index;
+            document.getElementById('editWorkoutName').value = workout.name;
+            document.getElementById('editDurationMin').value = Math.floor(workout.duration / 60);
+            document.getElementById('editDurationSec').value = workout.duration % 60;
+            document.getElementById('editModal').style.display = 'flex';
+        }
+
+        function closeEditModal() { document.getElementById('editModal').style.display = 'none'; }
+
+        function saveEdit() {
+            const index = document.getElementById('editIndex').value;
+            const newName = document.getElementById('editWorkoutName').value.trim();
+            const minVal = parseInt(document.getElementById('editDurationMin').value);
+            const secVal = parseInt(document.getElementById('editDurationSec').value);
+            const newTotalDuration = (minVal * 60) + secVal;
+            
+            if (newName.length < 6 && !workouts[index].isRest) { 
+                showToast("Nama workout minimal 6 huruf!", "error"); 
+                return; 
+            }
+            
+            if (newTotalDuration < 30) { 
+                showToast("Waktu minimal 30 detik!", "error"); 
+                return; 
+            }
+
+            workouts[index].name = newName; 
+            workouts[index].duration = newTotalDuration;
+            
+            saveToLocalStorage();
+            renderWorkouts(); 
+            closeEditModal(); 
+            showToast("✅ Perubahan disimpan", "success");
+        }
+
+        function confirmStop() {
+            if (!isPaused) {
+                pauseTimerLogic();
+            }
+            document.getElementById('stopModal').style.display = 'flex';
+        }
+
+        function closeStopModal() {
+            document.getElementById('stopModal').style.display = 'none';
+        }
+
+        function startWorkoutSession() {
+            if (workouts.length === 0) { showToast("Tambahkan workout terlebih dahulu!", "error"); return; }
+            isRunning = true; isPaused = false; currentIndex = 0;
+            toggleUIMode(true);
+            showToast("Olahraga dimulai", "success");
+            runTimer(true);
+        }
+
+        function togglePauseResume() {
+            if (!isPaused) {
+                pauseTimerLogic();
+                showToast("Sesi Jeda", "info");
+            } else {
+                resumeTimerLogic();
+                showToast("Sesi Dilanjutkan", "success");
+            }
+        }
+
+        function pauseTimerLogic() {
+            isPaused = true;
+            clearInterval(timerInterval);
+            const btn = document.getElementById('btnPauseResume');
+            btn.innerText = "LANJUTKAN";
+            btn.classList.replace('bg-yellow-600', 'bg-blue-600');
+        }
+
+        function resumeTimerLogic() {
+            isPaused = false;
+            const btn = document.getElementById('btnPauseResume');
+            btn.innerText = "JEDA";
+            btn.classList.replace('bg-blue-600', 'bg-yellow-600');
+            startInterval();
+        }
+
+        function stopWorkoutSession(isUserForced = false) {
+            clearInterval(timerInterval);
+            isRunning = false;
+            isPaused = false;
+            currentIndex = 0;
+            timeLeft = 0;
+            
+            closeStopModal();
+            toggleUIMode(false);
+            renderWorkouts();
+            updateTimerDisplay(0);
+            
+            if (isUserForced) {
+                showToast("Latihan dihentikan", "error");
+                const btn = document.getElementById('btnPauseResume');
+                btn.innerText = "JEDA";
+                btn.classList.remove('bg-blue-600');
+                btn.classList.add('bg-yellow-600');
+            }
+        }
+
+        function toggleUIMode(active) {
+            document.getElementById('mainControls').classList.toggle('hidden', active);
+            document.getElementById('activeControls').classList.toggle('hidden', !active);
+            document.getElementById('inputSection').classList.toggle('opacity-30', active);
+            document.getElementById('inputSection').classList.toggle('pointer-events-none', active);
+            document.getElementById('timerDisplay').classList.toggle('hidden', !active);
+        }
+
+        function runTimer(isNewWorkout = false) {
+            if (currentIndex >= workouts.length) {
+                finishSession();
+                return;
+            }
+            renderWorkouts();
+            if (isNewWorkout) {
+                timeLeft = workouts[currentIndex].duration;
+            }
+            updateTimerDisplay(timeLeft);
+            startInterval();
+        }
+
+        function startInterval() {
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                if (!isPaused) {
+                    timeLeft--;
+                    updateTimerDisplay(timeLeft);
+                    if (timeLeft <= 0) {
+                        clearInterval(timerInterval);
+                        currentIndex++;
+                        runTimer(true);
+                    }
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay(seconds) {
+            const display = document.getElementById('timerDisplay');
+            const mins = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            display.innerText = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        function finishSession() {
+            clearInterval(timerInterval);
+            document.getElementById('bellSound').play().catch(() => {});
+            document.getElementById('finishModal').style.display = 'flex';
+            stopWorkoutSession(false);
+        }
+
+        function closeModal() { document.getElementById('finishModal').style.display = 'none'; }
+
+        function showToast(msg, type = "info") {
+            const toast = document.createElement('div');
+            let bgColor = "bg-blue-600";
+            let borderColor = "border-blue-400";
+            if (type === "success") { bgColor = "bg-green-600"; borderColor = "border-green-400"; }
+            else if (type === "error") { bgColor = "bg-red-600"; borderColor = "border-red-400"; }
+            toast.className = `toast-center ${bgColor} text-white px-8 py-4 rounded-xl shadow-2xl font-bold text-center border-2 ${borderColor} min-w-[280px] md:min-w-[320px] text-sm md:text-base`;
+            toast.innerText = msg;
+            document.body.appendChild(toast);
+            setTimeout(() => { toast.remove(); }, 2500);
+        }
     </script>
-</body>
-</html>
+</\00\00\00
