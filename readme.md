@@ -1,17 +1,13 @@
-# MIE GACOAN TYCOON SIMULATOR
-Game simulasi bisnis idle/kliker dengan latar belakang waralaba makanan ringan khas Indonesia (Mie Gacoan) berbasis browser.
-Pemain dimulai dari gerai kecil, melayani pelanggan secara simulasi, mengembangkan menu, dan membangun kerajaan kuliner mie kekinian.
+# WORKOUT TRACKER
+Aplikasi untuk membuat dan melacak kegiatan olahraga
 
-## Fitur di dalam game simulasi : 
-- Auto clicker sesuai pendapatan per detik
-- 10 Prestasi pencapaian
-- 5 Jenis Rasa Mie Gacoan
-- 5 Jenis Karyawan
-- Upgrade Restoran
-- Notifikasi Ketika Berhasil Upgrade
-- Notifikasi Uang Tidak Mencukupi
-- Responsive Untuk Mobile
-- Simpan atau Reset Game Data
+## Fitur :
+- Membuat Nama Workout
+- Durasi Waktu yang di inginkan
+- Jeda Istirahat
+- Daftar Workout
+- Simpan Preset berdasarkan Daftar Workout
+- Akses Ke Preset Workout
 
 ## Engine yang digunakan :
 - HTML
